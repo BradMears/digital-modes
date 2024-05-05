@@ -7,7 +7,7 @@ export PULSE_SERVER=unix:/run/user/1000/pulse/native
 RADIO_DEVICE="${RADIO:-/dev/ttyUSB0}"
 
 FILE_PERMS=`stat -L -c "%a" ${RADIO_DEVICE}`
-if [ "${FILE_PERMS}" --ne "666" ]; then
+if [ "${FILE_PERMS}" != "666" ]; then
   sudo chmod 666 ${RADIO_DEVICE}
 fi 
 
