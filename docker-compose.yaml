@@ -1,0 +1,25 @@
+version: "3"
+
+# If you start this service with the --rm option, you'll get an interactive
+# session that can open X11 windows on the host display
+# e.g. docker-compose run --rm ham
+# You'll probably have to do 'xhost +' on the host first
+services:
+  ham:
+    #user: "${UID}:${GID}"
+    user: 1000:1000
+    image: digital-modes:latest
+    hostname: hamradio
+    privileged: true
+    build: .
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PULSE_SERVER=${PULSE_SERVER}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/pulse/native:/run/user/1000/pulse/native 
+      - /home/brad:/home/ubuntu
+    devices:
+      - '/dev/ttyUSB0:/dev/ttyUSB0'
+      #- '/dev/snd:/dev/snd'
+    network_mode: host
