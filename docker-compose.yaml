@@ -10,7 +10,7 @@ services:
     user: 1000:1000
     image: digital-modes:latest
     hostname: hamradio
-    privileged: true
+    #privileged: true
     build: .
     environment:
       - DISPLAY=${DISPLAY}
@@ -20,6 +20,7 @@ services:
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native 
       - /home/brad:/home/ubuntu
     devices:
-      - '/dev/ttyUSB0:/dev/ttyUSB0'
+      #- '/dev/ttyUSB1:/dev/ttyUSB1'
+      - '/dev/ic7300:/dev/ICOM7300'
       #- '/dev/snd:/dev/snd'
     network_mode: host
