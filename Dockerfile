@@ -1,15 +1,10 @@
-FROM ubuntu:latest
+FROM continuumio/anaconda3
 
-ENV TZ 'America/Denver'
-RUN echo $TZ > /etc/timezone && \
-  apt-get update && apt-get upgrade -y && \
-  apt-get install -y tzdata && \
-  rm /etc/localtime && \
-  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-  dpkg-reconfigure -f noninteractive tzdata && \
-  apt-get clean
-
-RUN apt-get install -y alsa-base alsa-utils
-RUN apt-get install -y wsjtx js8call fldigi flrig
+RUN apt update && apt upgrade -y && \
+    apt install -y libasound2 portaudio19-dev
+RUN conda install -y pyaudio && \
+    conda install jupyter -y --quiet && \
+    mkdir -p /opt/notebooks 
+RUN pip3 install sounddevice
 
 CMD ["/bin/bash"]
